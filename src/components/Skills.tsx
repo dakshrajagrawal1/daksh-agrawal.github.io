@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Shield, Lightbulb, Code2 } from "lucide-react";
 
 export default function Skills() {
@@ -28,7 +28,7 @@ export default function Skills() {
   ];
 
   // Infinite marquee variants
-  const marqueeVariants = {
+  const marqueeVariants: Variants = {
     animate: {
       x: [0, -1035],
       transition: {
@@ -42,7 +42,7 @@ export default function Skills() {
     },
   };
 
-  const reverseMarqueeVariants = {
+  const reverseMarqueeVariants: Variants = {
     animate: {
       x: [-1035, 0],
       transition: {
