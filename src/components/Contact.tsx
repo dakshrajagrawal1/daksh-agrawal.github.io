@@ -35,15 +35,36 @@ export default function Contact() {
     
     setStatus("submitting");
     
-    // EmailJS integration goes here
-    // Example: emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', e.target as HTMLFormElement, 'YOUR_PUBLIC_KEY')
-    
-    // Simulate API call for now
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({ name: "", email: "", type: "Research", message: "" });
-      setTimeout(() => setStatus("idle"), 5000);
-    }, 1500);
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "b35b880f-0298-4955-a4c9-3487d2abd7bc",
+          name: formData.name,
+          email: formData.email,
+          inquiry_type: formData.type,
+          message: formData.message,
+          subject: `New Portfolio Message from ${formData.name}`,
+          from_name: "Portfolio Contact Form",
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", type: "Research", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+    }
   };
 
   return (
